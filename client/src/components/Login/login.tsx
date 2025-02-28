@@ -22,11 +22,12 @@ export default function LoginView() {
       {/* Left Section */}
       <div className={cn(
         "relative hidden lg:flex flex-col w-[480px] items-start m-4",
-        "bg-sign-in bg-cover bg-center rounded-6"
+        "bg-sign-in bg-cover bg-center rounded-6",
         )}
       >
-        <div className="absolute inset-0 flex flex-col justify-between rounded-6 p-8 bg-[#FF5634]/50">
-          <div className="flex items-center gap-2">
+        <div className="absolute inset-0 flex flex-col justify-between rounded-6 p-8 bg-[#FF5634]/50 overflow-hidden">
+          <div className="absolute top-[calc(60vh)] rounded-b-6 bottom-[-200px] left-0 right-0 flex bg-gradient-to-t from-black via-black to-black/0 opacity-70" />
+          <div className="flex items-center gap-2 z-50">
             <Image
               src="/orderificLogo-icon.svg"
               width={50}
@@ -35,11 +36,11 @@ export default function LoginView() {
             />
             <p className={cn("text-white-100", fontTitle2)}>Orderific</p>
           </div>
-          <div className="flex flex-col gap-6">
-            <h1 className={cn("text-white-100", fontBigTypoDesktop)}>
+          <div className="flex flex-col gap-6 z-10">
+            <h1 className={cn("text-white-100", fontBigTypoDesktop, " tracking-[-0.08em] font-dm-sans")}>
               Service Panel
             </h1>
-            <p className={cn("text-white-100", fontBodyNormal)}>
+            <p className={cn("text-white-100", fontBodyNormal, "tracking-tight")}>
               Streamline your restaurant operations with BMS. Manage
               reservations, orders, inventory, and staff effortlessly, and focus
               on delivering exceptional dining experiences.

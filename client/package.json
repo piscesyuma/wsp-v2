@@ -29,6 +29,7 @@
     "@types/lodash": "^4.17.7",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
+    "client": "file:",
     "clsx": "^2.1.1",
     "countries-list": "^3.1.1",
     "laravel-echo": "^1.17.1",
