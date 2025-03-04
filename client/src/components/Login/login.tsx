@@ -5,7 +5,7 @@ import { MainButton } from "../mainButton";
 import { Label } from "../ui/label";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { fontBigTypoDesktop, fontBodyNormal, fontCaptionBold, fontTitle1, fontTitle2 } from "@/styles/typography";
+import { fontBigTypoDesktop, fontBodyNormal, fontCaptionBold, fontCaptionNormal, fontTitle1, fontTitle2 } from "@/styles/typography";
 
 export default function LoginView() {
   const [email, setEmail] = useState("");
@@ -171,8 +171,8 @@ export default function LoginView() {
         </div>
         {otpError && (
           <div className="flex items-center gap-1 text-semantic-red-100">
-            <Image src="/emergency.svg" width={16} height={16} alt="Error" />
-            <span className={cn(fontCaptionBold)}>Entered code is wrong!</span>
+            <Image src="/login-alert.svg" width={16} height={16} alt="Error" />
+            <span className={cn(fontCaptionNormal, "text-red-600")}>Entered code is wrong!</span>
           </div>
         )}
       </div>
