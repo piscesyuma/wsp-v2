@@ -8,10 +8,40 @@ import { FullscreenIcon } from "@/icons"
 import { IconButton } from "../iconButton"
 import { mockBrand, mockOrders } from "./mockData"
 
+const useFullscreenHandler = () => {
+    const { isFullscreen, setIsFullscreen } = useFullscreen()
+  
+    useEffect(() => {
+      const handleFullscreenChange = () => {
+        const fullscreenState = !!document.fullscreenElement
+        setIsFullscreen(fullscreenState)
+      }
+      document.addEventListener("fullscreenchange", handleFullscreenChange)
+      return () => {
+        document.removeEventListener("fullscreenchange", handleFullscreenChange)
+      }
+    }, [setIsFullscreen])
+  
+    const handleFullscreen = async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen()
+          setIsFullscreen(true)
+        } else {
+          await document.exitFullscreen()
+          setIsFullscreen(false)
+        }
+      } catch (err) {
+        console.error("Error attempting to toggle full-screen mode", err)
+      }
+    }
+  
+    return { isFullscreen, handleFullscreen }
+  }
+
 export default function OrderStatus() {
-  const { isFullscreen, toggleFullscreen } = useFullscreen()
+  const { isFullscreen, handleFullscreen } = useFullscreenHandler()
   const [currentTime, setCurrentTime] = useState<string>("")
-  const [showFullscreenButton, setShowFullscreenButton] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
   const [preparingOrders, setPreparingOrders] = useState<any[]>([])
   const [readyOrders, setReadyOrders] = useState<any[]>([])
@@ -48,32 +78,6 @@ export default function OrderStatus() {
 
     loadData()
   }, [])
-
-  // Handle fullscreen button visibility
-  useEffect(() => {
-    const handleMouseMove = () => {
-      setShowFullscreenButton(true)
-      
-      if (mouseTimeoutRef.current) {
-        clearTimeout(mouseTimeoutRef.current)
-      }
-      
-      mouseTimeoutRef.current = setTimeout(() => {
-        if (isFullscreen) {
-          setShowFullscreenButton(false)
-        }
-      }, 5000)
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      if (mouseTimeoutRef.current) {
-        clearTimeout(mouseTimeoutRef.current)
-      }
-    }
-  }, [isFullscreen])
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -129,13 +133,13 @@ export default function OrderStatus() {
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <h1 className={cn(fontTitle1, "text-black-100")}>Order Status</h1>
-        {(!isFullscreen || showFullscreenButton) && (
+        {(!isFullscreen) && (
           <IconButton
             icon={FullscreenIcon}
             iconSize="24"
             size="large"
             variant="transparent"
-            onClick={toggleFullscreen}
+            onClick={handleFullscreen}
             aria-label="Enter fullscreen"
             text="FullScreen"
           />
