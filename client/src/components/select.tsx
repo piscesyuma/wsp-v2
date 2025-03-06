@@ -22,6 +22,7 @@ export interface CustomSelectProps<T> {
   selectWidth?: string
   defaultValue?: { value: T; label: string }
   menuWidth?: string
+  truncateLength?: number
 }
 
 const CustomSelect = <T,>({
@@ -33,6 +34,7 @@ const CustomSelect = <T,>({
   selectWidth,
   defaultValue,
   menuWidth = "min-w-[250px]",
+  truncateLength,
 }: CustomSelectProps<T>) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState<{
@@ -94,7 +96,10 @@ const CustomSelect = <T,>({
                 </span>
 
                 <span className={cn("text-black-100", fontCaptionBold)}>
-                  {selectedOption.label}
+                  {truncateLength &&
+                  selectedOption.label.length > truncateLength
+                    ? `${selectedOption.label.substring(0, truncateLength)}...`
+                    : selectedOption.label}
                 </span>
               </div>
             ) : (
