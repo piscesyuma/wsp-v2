@@ -35,6 +35,16 @@ export const routes: Route[] = [
     module: "Kitchen Panel",
   },
   {
+    name: "Kitchen Display",
+    href: "/kitchen-display",
+    current: true,
+    icon: LabProfileIcon,
+    includeLayout: true,
+    includeMainSidebar: true,
+    includeSecondarySidebar: false,
+    module: "Kitchen Panel",
+  },
+  {
     name: "Live Counter",
     href: "/live-counter",
     current: true,
